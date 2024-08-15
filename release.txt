@@ -1,0 +1,13 @@
+docker buildx build --platform linux/amd64 -t medicdata-api-dev:latest . --load
+docker run -d -p 8000:8000 --name conteiner-medicdata --env-file .env medicdata-api-dev:latest
+
+az login
+az acr login --name acrmedicdatadev
+
+docker tag medicdata-api-dev:latest acrmedicdatadev.azurecr.io/medicdata-api-dev:latest
+docker tag medicdata-api-dev:latest acrmedicdatadev.azurecr.io/medicdata-api-dev:0.1.1
+
+docker push acrmedicdatadev.azurecr.io/medicdata-api-dev:latest
+docker push acrmedicdatadev.azurecr.io/medicdata-api-dev:0.1.1
+
+
